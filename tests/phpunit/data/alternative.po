@@ -1,0 +1,17 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: DynaMo\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+
+msgid "As he looked out the window, he saw a clown walk by."
+msgstr "En regardant par la fenêtre, il vit un clown passer."
+
+msgid "He didn't understand why the bird wanted to ride the bicycle."
+msgstr "Il ne comprenait pas pourquoi l'oiseau voulait faire de la byciclette."
+
+msgid "That was how he came to win $1 million."
+msgstr "C'est ainsi qu'il a gagné un million de dollars."
+
+msgid "Dolores wouldn't have eaten the meal if she had known what it actually was."
+msgstr "Dolores n'aurait pas mangé ce repas si elle avait su ce que c'était réellement."
+

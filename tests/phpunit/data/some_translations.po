@@ -1,0 +1,18 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: DynaMo\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+
+msgid "There's a reason that roses have thorns."
+msgstr "Il y a une raison pour laquelle les roses ont des épines."
+
+msgid "She traveled because it cost the same as therapy and was a lot more enjoyable."
+msgstr "Elle voyageait parce que cela coûtait le même prix qu'une thérapie et était beaucoup plus agréable."
+
+msgid "I purchased a baby clown from the Russian terrorist black market."
+msgstr "J'ai acheté un bébé clown au marché noir terroriste russe."
+
+msgid "The ants enjoyed the barbecue more than the family."
+msgstr "Les fourmis ont plus apprécié le barbecue que la famille."
+
+
