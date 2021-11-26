@@ -1,0 +1,8 @@
+includes:
+	- vendor/wpsyntex/polylang-phpstan/extension.neon
+parameters:
+	level: max
+	paths:
+		- dynamo.php
+		- src/
+	checkMissingIterableValueType: false
