@@ -8,9 +8,8 @@
  *
  * @wordpress-plugin
  * Plugin Name:       DynaMo
- * Plugin URI:        https://polylang.pro
  * Description:       Improves the WordPress translations performance
- * Version:           1.0-dev
+ * Version:           1.0
  * Requires at least: 5.2
  * Requires PHP:      5.6
  * Author:            WP SYNTEX
