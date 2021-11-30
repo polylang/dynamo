@@ -13,9 +13,9 @@ Improves the performance of WordPress translation
 
 == Description ==
 
-WordPress, your theme and your plugins are all written in US English. The possibility to use them in your own language is one of the greatest feature offered by the community of translators. Unfortunately, this comes at a high price. The translation process slows down your site. A lot. At least 20% for a fresh install and generally much more for a site using a few plugins.
+WordPress, your theme and your plugins are all written in US English. The possibility to use them in your own language is one of the greatest features offered by the community of translators. Unfortunately, this comes at a high price. The translation process slows down your site. A lot. At least by 20% for a fresh install and generally much more for a site using a few plugins.
 
-DynaMo uses a different way to handle the translations which increases the performance compared to the method used by WordPress. How much it will improve your site performance will depend on your install. But the more (translated) plugins, the more difference you can observe. In our own tests with a few popular plugins (WooCommerce, JetPack, Yoast SEO and Elementor) we measured a page generation time decrased by 25%!
+DynaMo uses a different way to handle the translations which increases the performance compared to the method used by WordPress. How much it will improve your site performance will depend on your install. But the more (translated) plugins, the more difference you will observe. In our own tests with a few popular plugins (WooCommerce, JetPack, Yoast SEO and Elementor) we measured a page generation time decreased by 25%!
 
 Install and activate the plugin as usual from the 'Plugins' menu in WordPress. That's all. There are no settings.
 
