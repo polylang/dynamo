@@ -75,7 +75,9 @@ class MO {
 
 		$this->plural_forms_handler = new \Plural_Forms( $reader->get_plural_expression() );
 
-		$this->items[] = $reader->get_search_handler();
+		$this->items[]   = $reader->get_search_handler();
+		$this->cache[''] = ''; // _get_plugin_data_markup_translate() may call translate() with an empty string.
+
 		return true;
 	}
 
@@ -105,11 +107,6 @@ class MO {
 	 * @return string
 	 */
 	public function translate( $singular, $context = null ) {
-		// _get_plugin_data_markup_translate() may call translate() with an empty string.
-		if ( empty( $singular ) ) {
-			return $singular;
-		}
-
 		$key = ! $context ? $singular : $context . "\4" . $singular;
 
 		if ( isset( $this->cache[ $key ] ) ) {
