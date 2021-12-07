@@ -1,7 +1,7 @@
 {
 	"name": "wpsyntex/dynamo",
 	"description": "Improves the performance of WordPress translation",
-	"license": "GPL-3.0-or-later",
+	"license": "GPL-2.0-or-later",
 	"homepage": "https://polylang.pro",
 	"type": "wordpress-plugin",
 	"require": {
