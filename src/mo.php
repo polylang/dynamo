@@ -90,7 +90,7 @@ class MO {
 	 */
 	public function merge_with( &$other ) {
 		if ( $other instanceof MO ) {
-			$this->items = array_merge( $other->get_items(), $this->items );
+			$this->items = array_merge( $other->items, $this->items );
 		}
 	}
 
@@ -162,16 +162,5 @@ class MO {
 		}
 
 		return 1 === (int) $count ? $singular : $plural;
-	}
-
-	/**
-	 * Returns the MO search handlers included in this instance.
-	 *
-	 * @since 1.0
-	 *
-	 * @return Search_Handler[]
-	 */
-	public function get_items() {
-		return $this->items;
 	}
 }
