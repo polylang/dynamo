@@ -86,18 +86,16 @@ class Binary_Search implements Search_Handler {
 			if ( ! isset( $this->originals[ $pos ] ) ) {
 				if ( $this->originals_table[ $i ] > 0 ) {
 					\fseek( $this->handle, (int) $this->originals_table[ $i + 1 ] );
-					$this->originals[ $pos ] = (string) \fread( $this->handle, (int) $this->originals_table[ $i ] );
+					$original = (string) \fread( $this->handle, (int) $this->originals_table[ $i ] );
+					$parts    = explode( "\0", $original ); // Remove the plural forms for the comparison with the searched key.
+
+					$this->originals[ $pos ] = $parts[0];
 				} else {
 					$this->originals[ $pos ] = '';
 				}
 			}
 
-			/*
-			 * For plurals, we limit the comparison to the length of the searched key
-			 * because the key doesn't include the plural form while the original does.
-			 */
-			$length = \strpos( $this->originals[ $pos ], "\0" );
-			$cmp    = $length ? \strncmp( $key, $this->originals[ $pos ], $length ) : \strcmp( $key, $this->originals[ $pos ] );
+			$cmp = \strcmp( $key, $this->originals[ $pos ] );
 
 			if ( $cmp < 0 ) {
 				$right = $pos;

@@ -112,14 +112,17 @@ class Hash_Search implements Search_Handler {
 
 			if ( ! isset( $this->originals[ $pos ] ) && $this->originals_table[ $i ] >= $length ) {
 				\fseek( $this->handle, (int) $this->originals_table[ $i + 1 ] );
-				$this->originals[ $pos ] = (string) \fread( $this->handle, (int) $this->originals_table[ $i ] );
+				$original = (string) \fread( $this->handle, (int) $this->originals_table[ $i ] );
+				$parts    = explode( "\0", $original ); // Remove the plural forms for the comparison with the searched key.
+
+				$this->originals[ $pos ] = $parts[0];
 			}
 
 			/*
 			 * We limit the comparison to the length of the searched key
 			 * because the key doesn't include the plural form while the original does.
 			 */
-			if ( isset( $this->originals[ $pos ] ) && 0 === strncmp( $key, $this->originals[ $pos ], $length ) ) {
+			if ( isset( $this->originals[ $pos ] ) && $key === $this->originals[ $pos ] ) {
 				\fseek( $this->handle, (int) $this->translations_table[ $i + 1 ] );
 				return \fread( $this->handle, (int) $this->translations_table[ $i ] );
 			}
