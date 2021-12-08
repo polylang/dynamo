@@ -114,6 +114,7 @@ class Hash_Search implements Search_Handler {
 				\fseek( $this->handle, (int) $this->originals_table[ $i + 1 ] );
 				$original = (string) \fread( $this->handle, (int) $this->originals_table[ $i ] );
 				$parts    = explode( "\0", $original ); // Remove the plural forms for the comparison with the searched key.
+
 				$this->originals[ $pos ] = $parts[0];
 			}
 
