@@ -15,6 +15,11 @@ namespace WP_Syntex\DynaMo\Full;
 class MO extends \WP_Syntex\DynaMo\MO {
 
 	/**
+	 * Cache group name.
+	 */
+	const CACHE_GROUP = 'DynaMo';
+
+	/**
 	 * Stores all translations for (maybe) next calls.
 	 *
 	 * @var string[]
@@ -28,6 +33,18 @@ class MO extends \WP_Syntex\DynaMo\MO {
 	 */
 	protected $plural_forms;
 
+
+	/**
+	 * Cleans the translations cache.
+	 *
+	 * @since 1.1
+	 *
+	 * @return void
+	 */
+	public static function clean_cache() {
+		wp_cache_delete( 'last_changed', self::CACHE_GROUP );
+	}
+
 	/**
 	 * Imports a MO file.
 	 * Required by the implicit WordPress interface.
@@ -38,6 +55,24 @@ class MO extends \WP_Syntex\DynaMo\MO {
 	 * @return bool
 	 */
 	public function import_from_file( $filename ) {
+		$using_ext_cache = wp_using_ext_object_cache();
+
+		// Attempts to get the translation from the object cache only if external object cache is available.
+		if ( $using_ext_cache ) {
+			add_action( 'upgrader_process_complete', array( __CLASS__, 'clean_cache' ) ); // Cleans the cache each time there is an update.
+
+			$last_changed = wp_cache_get_last_changed( self::CACHE_GROUP );
+			$key          = md5( $filename ) . ":$last_changed";
+			$cache        = wp_cache_get( $key, self::CACHE_GROUP );
+
+			if ( false !== $cache ) {
+				$this->container    = $cache['translations'];
+				$this->plural_forms = new \Plural_Forms( $cache['plural_forms'] );
+				return true;
+			}
+		}
+
+		// Read and parse the translation file.
 		$file_handle = fopen( $filename, 'rb' );
 
 		if ( ! $file_handle ) {
@@ -52,8 +87,34 @@ class MO extends \WP_Syntex\DynaMo\MO {
 			return false;
 		}
 
-		$this->plural_forms = new \Plural_Forms( $reader->get_plural_expression() );
+		$plural_expression  = $reader->get_plural_expression();
+		$this->plural_forms = new \Plural_Forms( $plural_expression );
 		$this->container    = $reader->get_translations();
+
+		// It's useless to cache anything if external object cache is not available.
+		if ( $using_ext_cache ) {
+			/**
+			 * Filters the cache expiration limit.
+			 *
+			 * @since 1.1
+			 *
+			 * @param int    $expire   When to expire the cache contents, in seconds.
+			 *                         0 means no expiration, defaults to 12 hours.
+			 * @param string $filename Translation file name.
+			 */
+			$expire = apply_filters( 'dynamo_cache_expire', 12 * HOUR_IN_SECONDS, $filename );
+
+			wp_cache_set(
+				$key,
+				array(
+					'plural_forms' => $plural_expression,
+					'translations' => $this->container,
+				),
+				self::CACHE_GROUP,
+				$expire // phpcs:ignore WordPressVIPMinimum.Performance.LowExpiryCacheTime.CacheTimeUndetermined
+			);
+		}
+
 		return true;
 	}
 
