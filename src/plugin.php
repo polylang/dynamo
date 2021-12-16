@@ -41,7 +41,18 @@ class Plugin {
 			return false;
 		}
 
-		$mo = new Dynamic\MO();
+		$mo = wp_using_ext_object_cache() ? new Full\MO() : new Dynamic\MO();
+
+		/**
+		 * Filters the object used to load the translation file.
+		 *
+		 * @since 1.1
+		 *
+		 * @param object $mo     MO file loader.
+		 * @param string $domain Text domain.
+		 */
+		$mo = apply_filters( 'dynamo_file_loader', $mo, $domain );
+
 		if ( ! $mo->import_from_file( $mofile ) ) {
 			return false;
 		}
