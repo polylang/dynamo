@@ -5,7 +5,7 @@
  * @package DynaMo
  */
 
-namespace WP_Syntex\DynaMo;
+namespace WP_Syntex\DynaMo\Dynamic;
 
 /**
  * A class defining objects usable in the WordPress global $l10n array.

@@ -15,7 +15,7 @@ class MO_Test extends WP_UnitTestCase {
 	public function test_instance() {
 		( new Plugin() )->add_hooks();
 		load_textdomain( 'domain', TEST_DATA_DIR . 'some_translations.mo' );
-		$this->assertTrue( $GLOBALS['l10n']['domain'] instanceof WP_Syntex\DynaMo\MO );
+		$this->assertTrue( $GLOBALS['l10n']['domain'] instanceof WP_Syntex\DynaMo\Dynamic\MO );
 	}
 
 	public function test_loading_two_files_should_include_strings_of_both_files() {
@@ -40,10 +40,10 @@ class MO_Test extends WP_UnitTestCase {
 	}
 
 	public function test_merge_should_keep_other_strings() {
-		$mo = new WP_Syntex\DynaMo\MO();
+		$mo = new WP_Syntex\DynaMo\Dynamic\MO();
 		$mo->import_from_file( TEST_DATA_DIR . 'alternative.mo' );
 
-		$other = new WP_Syntex\DynaMo\MO();
+		$other = new WP_Syntex\DynaMo\Dynamic\MO();
 		$other->import_from_file( TEST_DATA_DIR . 'automatic.mo' );
 
 		$mo->merge_with( $other );
@@ -56,7 +56,7 @@ class MO_Test extends WP_UnitTestCase {
 	 */
 	public function test_merge_into_WP_MO() {
 		$wp_mo  = new \MO();
-		$our_mo = new WP_Syntex\DynaMo\MO();
+		$our_mo = new WP_Syntex\DynaMo\Dynamic\MO();
 
 		$wp_mo->merge_with( $our_mo );
 		$this->assertTrue( $wp_mo instanceof \MO );
@@ -86,6 +86,6 @@ class MO_Test extends WP_UnitTestCase {
 		$this->assertFalse( is_textdomain_loaded( 'internationalized-plugin' ) );
 		$this->assertSame( 'Das ist ein Dummy Plugin', i18n_plugin_test() );
 		$this->assertTrue( is_textdomain_loaded( 'internationalized-plugin' ) );
-		$this->assertTrue( $GLOBALS['l10n']['internationalized-plugin'] instanceof WP_Syntex\DynaMo\MO );
+		$this->assertTrue( $GLOBALS['l10n']['internationalized-plugin'] instanceof WP_Syntex\DynaMo\Dynamic\MO );
 	}
 }

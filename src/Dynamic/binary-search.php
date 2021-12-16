@@ -5,7 +5,7 @@
  * @package DynaMo
  */
 
-namespace WP_Syntex\DynaMo;
+namespace WP_Syntex\DynaMo\Dynamic;
 
 /**
  * Implements the search algorithm using a binary search, useful when no hash table is provided.

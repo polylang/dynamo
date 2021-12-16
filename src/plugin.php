@@ -41,7 +41,7 @@ class Plugin {
 			return false;
 		}
 
-		$mo = new MO();
+		$mo = new Dynamic\MO();
 		if ( ! $mo->import_from_file( $mofile ) ) {
 			return false;
 		}

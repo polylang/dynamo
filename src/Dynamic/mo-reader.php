@@ -5,7 +5,7 @@
  * @package DynaMo
  */
 
-namespace WP_Syntex\DynaMo;
+namespace WP_Syntex\DynaMo\Dynamic;
 
 /**
  * A class to read MO files.
