@@ -12,17 +12,7 @@ namespace WP_Syntex\DynaMo\Dynamic;
  *
  * @since 1.0
  */
-class MO {
-
-	/**
-	 * Empty array.
-	 *
-	 * It is there only in case someone attempts to directly merge an instance
-	 * of this class into a WordPress MO object.
-	 *
-	 * @var \Translation_Entry[]
-	 */
-	public $entries = array();
+class MO extends \WP_Syntex\DynaMo\MO {
 
 	/**
 	 * Stores all translations for (maybe) next calls.
