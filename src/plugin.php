@@ -48,7 +48,7 @@ class Plugin {
 		 *
 		 * @since 1.1
 		 *
-		 * @param object $mo     MO file loader.
+		 * @param MO     $mo     MO file loader.
 		 * @param string $domain Text domain.
 		 */
 		$mo = apply_filters( 'dynamo_file_loader', $mo, $domain );

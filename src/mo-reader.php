@@ -80,7 +80,7 @@ abstract class MO_Reader {
 	 *
 	 * @param resource $handle Stream handle.
 	 * @param string   $endian 'N' or 'V' depending on the endianness of the file.
-	 * @return array|false
+	 * @return int[]|false
 	 */
 	protected static function read_header( $handle, $endian ) {
 		$header = fread( $handle, 24 );

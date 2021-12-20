@@ -5,4 +5,5 @@ parameters:
 	paths:
 		- dynamo.php
 		- src/
-	checkMissingIterableValueType: false
+	ignoreErrors:
+		- '#^Function apply_filters invoked with [34567] parameters, 2 required\.$#'
