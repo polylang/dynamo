@@ -5,7 +5,7 @@
  * @package DynaMo
  */
 
-namespace WP_Syntex\DynaMo;
+namespace WP_Syntex\DynaMo\Dynamic;
 
 /**
  * Interface for algorithms to search translations in a MO file.
