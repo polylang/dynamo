@@ -19,7 +19,7 @@ class MO extends \WP_Syntex\DynaMo\MO {
 	 *
 	 * @var string[]
 	 */
-	protected $cache = array();
+	protected $container = array();
 
 	/**
 	 * An array of objects handling the translations search in files loaded by this class.
@@ -33,7 +33,7 @@ class MO extends \WP_Syntex\DynaMo\MO {
 	 *
 	 * @var \Plural_Forms
 	 */
-	protected $plural_forms_handler;
+	protected $plural_forms;
 
 	/**
 	 * Imports a MO file.
@@ -63,10 +63,9 @@ class MO extends \WP_Syntex\DynaMo\MO {
 			return false;
 		}
 
-		$this->plural_forms_handler = new \Plural_Forms( $reader->get_plural_expression() );
-
-		$this->items[]   = $reader->get_search_handler();
-		$this->cache[''] = ''; // _get_plugin_data_markup_translate() may call translate() with an empty string.
+		$this->plural_forms  = new \Plural_Forms( $reader->get_plural_expression() );
+		$this->items[]       = $reader->get_search_handler();
+		$this->container[''] = ''; // _get_plugin_data_markup_translate() may call translate() with an empty string.
 
 		return true;
 	}
@@ -99,19 +98,19 @@ class MO extends \WP_Syntex\DynaMo\MO {
 	public function translate( $singular, $context = null ) {
 		$key = ! $context ? $singular : $context . "\4" . $singular;
 
-		if ( isset( $this->cache[ $key ] ) ) {
-			return $this->cache[ $key ];
+		if ( isset( $this->container[ $key ] ) ) {
+			return $this->container[ $key ];
 		}
 
 		foreach ( $this->items as $item ) {
 			$translation = $item->get_translation( $key );
 			if ( ! empty( $translation ) ) {
-				$this->cache[ $key ] = $translation;
+				$this->container[ $key ] = $translation;
 				return $translation;
 			}
 		}
 
-		$this->cache[ $key ] = $singular; // Default in case we don't find a translation.
+		$this->container[ $key ] = $singular; // Default in case we don't find a translation.
 		return $singular;
 	}
 
@@ -130,19 +129,19 @@ class MO extends \WP_Syntex\DynaMo\MO {
 	public function translate_plural( $singular, $plural, $count, $context = null ) {
 		$key = ! $context ? $singular : $context . "\4" . $singular;
 
-		if ( ! isset( $this->cache[ $key ] ) ) {
+		if ( ! isset( $this->container[ $key ] ) ) {
 			foreach ( $this->items as $item ) {
 				$translation = $item->get_translation( $key );
 				if ( ! empty( $translation ) ) {
-					$this->cache[ $key ] = $translation;
+					$this->container[ $key ] = $translation;
 					break;
 				}
 			}
 		}
 
-		if ( isset( $this->cache[ $key ] ) ) {
-			$translations = explode( "\0", $this->cache[ $key ] );
-			$index        = $this->plural_forms_handler->get( $count );
+		if ( isset( $this->container[ $key ] ) ) {
+			$translations = explode( "\0", $this->container[ $key ] );
+			$index        = $this->plural_forms->get( $count );
 			if ( isset( $translations[ $index ] ) ) {
 				return $translations[ $index ];
 			}
