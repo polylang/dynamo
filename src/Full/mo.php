@@ -61,6 +61,8 @@ class MO extends \WP_Syntex\DynaMo\MO {
 		if ( $using_ext_cache ) {
 			add_action( 'upgrader_process_complete', array( __CLASS__, 'clean_cache' ) ); // Cleans the cache each time there is an update.
 
+			wp_cache_add_global_groups( self::CACHE_GROUP ); // The cache is common to all sites on multisite.
+
 			$last_changed = wp_cache_get_last_changed( self::CACHE_GROUP );
 			$key          = md5( $filename ) . ":$last_changed";
 			$cache        = wp_cache_get( $key, self::CACHE_GROUP );
