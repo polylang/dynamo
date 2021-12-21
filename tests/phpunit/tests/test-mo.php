@@ -38,6 +38,17 @@ class MO_Test extends WP_UnitTestCase {
 	}
 
 	/**
+	 * Test to read a wrong file.
+	 *
+	 * @dataProvider mo_provider
+	 */
+	public function test_unreadable_file( $class ) {
+		$this->init( $class );
+		load_textdomain( 'domain', 'some_unreadable_file.mo' );
+		$this->assertEmpty( $GLOBALS['l10n'] );
+	}
+
+	/**
 	 * Test loading two files for same domain with different strings.
 	 *
 	 * @dataProvider mo_provider

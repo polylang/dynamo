@@ -72,6 +72,10 @@ class MO extends \WP_Syntex\DynaMo\MO {
 			}
 		}
 
+		if ( ! is_readable( $filename ) ) {
+			return false;
+		}
+
 		// Read and parse the translation file.
 		$file_handle = fopen( $filename, 'rb' );
 
