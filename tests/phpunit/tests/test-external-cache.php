@@ -9,7 +9,7 @@ class External_Cache_Test extends WP_UnitTestCase {
 	const LAST_CHANGED = 1;
 
 	public function set_up() {
-		$this->using_ext_cache = wp_using_ext_object_cache();
+		$this->using_ext_cache = (bool) wp_using_ext_object_cache();
 		wp_using_ext_object_cache( true ); // Fake external object cache.
 		wp_cache_set( 'last_changed', self::LAST_CHANGED, self::CACHE_GROUP );
 	}
