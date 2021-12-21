@@ -37,11 +37,18 @@ class Plugin {
 	public function override_load_textdomain( $override, $domain, $mofile ) {
 		global $l10n;
 
-		if ( ! is_readable( $mofile ) ) {
-			return false;
-		}
+		$mo = wp_using_ext_object_cache() ? new Full\MO() : new Dynamic\MO();
 
-		$mo = new Dynamic\MO();
+		/**
+		 * Filters the object used to load the translation file.
+		 *
+		 * @since 1.1
+		 *
+		 * @param MO     $mo     MO file loader.
+		 * @param string $domain Text domain.
+		 */
+		$mo = apply_filters( 'dynamo_file_loader', $mo, $domain );
+
 		if ( ! $mo->import_from_file( $mofile ) ) {
 			return false;
 		}

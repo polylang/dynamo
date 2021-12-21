@@ -9,17 +9,52 @@ class MO_Test extends WP_UnitTestCase {
 		remove_filter( 'locale', array( $this, 'filter_set_locale_to_german' ) );
 	}
 
-	/**
-	 * Make sure load_textdomain() loads our class.
-	 */
-	public function test_instance() {
-		( new Plugin() )->add_hooks();
-		load_textdomain( 'domain', TEST_DATA_DIR . 'some_translations.mo' );
-		$this->assertTrue( $GLOBALS['l10n']['domain'] instanceof WP_Syntex\DynaMo\Dynamic\MO );
+	public function mo_provider() {
+		return array(
+			array( 'WP_Syntex\DynaMo\Dynamic\MO' ),
+			array( 'WP_Syntex\DynaMo\Full\MO' ),
+		);
 	}
 
-	public function test_loading_two_files_should_include_strings_of_both_files() {
+	protected function init( $class ) {
+		add_filter(
+			'dynamo_file_loader',
+			function() use ( $class ) {
+				return new $class();
+			}
+		);
 		( new Plugin() )->add_hooks();
+	}
+
+	/**
+	 * Make sure load_textdomain() loads our class.
+	 *
+	 * @dataProvider mo_provider
+	 */
+	public function test_instance( $class ) {
+		$this->init( $class );
+		load_textdomain( 'domain', TEST_DATA_DIR . 'some_translations.mo' );
+		$this->assertTrue( $GLOBALS['l10n']['domain'] instanceof $class );
+	}
+
+	/**
+	 * Test to read a wrong file.
+	 *
+	 * @dataProvider mo_provider
+	 */
+	public function test_unreadable_file( $class ) {
+		$this->init( $class );
+		load_textdomain( 'domain', 'some_unreadable_file.mo' );
+		$this->assertEmpty( $GLOBALS['l10n'] );
+	}
+
+	/**
+	 * Test loading two files for same domain with different strings.
+	 *
+	 * @dataProvider mo_provider
+	 */
+	public function test_loading_two_files_should_include_strings_of_both_files( $class ) {
+		$this->init( $class );
 		load_textdomain( 'default', TEST_DATA_DIR . 'automatic.mo' );
 		load_textdomain( 'default', TEST_DATA_DIR . 'some_translations.mo' );
 
@@ -30,8 +65,13 @@ class MO_Test extends WP_UnitTestCase {
 		$this->assertSame( 'Les fourmis ont plus apprécié le barbecue que la famille.', __( 'The ants enjoyed the barbecue more than the family.' ) );
 	}
 
-	public function test_loading_two_files_should_not_overwrite_first_strings() {
-		( new Plugin() )->add_hooks();
+	/**
+	 * Test loading two files for same domain with same strings.
+	 *
+	 * @dataProvider mo_provider
+	 */
+	public function test_loading_two_files_should_not_overwrite_first_strings( $class ) {
+		$this->init( $class );
 		load_textdomain( 'default', TEST_DATA_DIR . 'alternative.mo' );
 		load_textdomain( 'default', TEST_DATA_DIR . 'automatic.mo' );
 
@@ -39,11 +79,16 @@ class MO_Test extends WP_UnitTestCase {
 		$this->assertSame( 'En regardant par la fenêtre, il vit un clown passer.', __( 'As he looked out the window, he saw a clown walk by.' ) );
 	}
 
-	public function test_merge_should_keep_other_strings() {
-		$mo = new WP_Syntex\DynaMo\Dynamic\MO();
+	/**
+	 * Test merging two files.
+	 *
+	 * @dataProvider mo_provider
+	 */
+	public function test_merge_should_keep_other_strings( $class ) {
+		$mo = new $class();
 		$mo->import_from_file( TEST_DATA_DIR . 'alternative.mo' );
 
-		$other = new WP_Syntex\DynaMo\Dynamic\MO();
+		$other = new $class();
 		$other->import_from_file( TEST_DATA_DIR . 'automatic.mo' );
 
 		$mo->merge_with( $other );
@@ -53,11 +98,12 @@ class MO_Test extends WP_UnitTestCase {
 
 	/**
 	 * Just test that we don't have any error.
+	 *
+	 * @dataProvider mo_provider
 	 */
-	public function test_merge_into_WP_MO() {
+	public function test_merge_into_WP_MO( $class ) {
 		$wp_mo  = new \MO();
-		$our_mo = new WP_Syntex\DynaMo\Dynamic\MO();
-
+		$our_mo = new $class();
 		$wp_mo->merge_with( $our_mo );
 		$this->assertTrue( $wp_mo instanceof \MO );
 	}
@@ -75,9 +121,11 @@ class MO_Test extends WP_UnitTestCase {
 	 * The test is directly inspired from a WordPress test
 	 *
 	 * @see https://github.com/WordPress/wordpress-develop/blob/5.8.2/tests/phpunit/tests/l10n/loadTextdomainJustInTime.php#L63-L80
+	 *
+	 * @dataProvider mo_provider
 	 */
-	public function test_load_just_in_time() {
-		( new Plugin() )->add_hooks();
+	public function test_load_just_in_time( $class ) {
+		$this->init( $class );
 
 		add_filter( 'locale', array( $this, 'filter_set_locale_to_german' ) );
 
@@ -86,6 +134,6 @@ class MO_Test extends WP_UnitTestCase {
 		$this->assertFalse( is_textdomain_loaded( 'internationalized-plugin' ) );
 		$this->assertSame( 'Das ist ein Dummy Plugin', i18n_plugin_test() );
 		$this->assertTrue( is_textdomain_loaded( 'internationalized-plugin' ) );
-		$this->assertTrue( $GLOBALS['l10n']['internationalized-plugin'] instanceof WP_Syntex\DynaMo\Dynamic\MO );
+		$this->assertTrue( $GLOBALS['l10n']['internationalized-plugin'] instanceof $class );
 	}
 }

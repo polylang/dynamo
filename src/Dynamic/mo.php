@@ -48,6 +48,10 @@ class MO extends \WP_Syntex\DynaMo\MO {
 	 * @return bool
 	 */
 	public function import_from_file( $filename ) {
+		if ( ! is_readable( $filename ) ) {
+			return false;
+		}
+
 		$file_handle = fopen( $filename, 'rb' );
 		$mem_handle  = fopen( 'php://memory', 'w+b' );
 
