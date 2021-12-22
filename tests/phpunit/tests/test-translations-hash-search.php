@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__ . '/translations-test-trait.php';
-
 use WP_Syntex\DynaMo\Plugin as Plugin;
 
 class Translations_Hash_Search_Test extends WP_UnitTestCase {
