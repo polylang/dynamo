@@ -1,35 +1,20 @@
 <?php
 
-use WP_Syntex\DynaMo\Plugin as Plugin;
-
 class MO_Test extends WP_UnitTestCase {
+	use Init_Trait;
+	use File_Loader_Provider_Trait;
 
 	public function tear_down() {
 		unset( $GLOBALS['l10n'] );
 		remove_filter( 'locale', array( $this, 'filter_set_locale_to_german' ) );
 	}
 
-	public function mo_provider() {
-		return array(
-			array( 'WP_Syntex\DynaMo\Dynamic\MO' ),
-			array( 'WP_Syntex\DynaMo\Full\MO' ),
-		);
-	}
-
-	protected function init( $class ) {
-		add_filter(
-			'dynamo_file_loader',
-			function() use ( $class ) {
-				return new $class();
-			}
-		);
-		( new Plugin() )->add_hooks();
-	}
-
 	/**
 	 * Make sure load_textdomain() loads our class.
 	 *
 	 * @dataProvider mo_provider
+	 *
+	 * @param string $class Class loader to instantiate.
 	 */
 	public function test_instance( $class ) {
 		$this->init( $class );
@@ -41,6 +26,8 @@ class MO_Test extends WP_UnitTestCase {
 	 * Test to read a wrong file.
 	 *
 	 * @dataProvider mo_provider
+	 *
+	 * @param string $class Class loader to instantiate.
 	 */
 	public function test_unreadable_file( $class ) {
 		$this->init( $class );
@@ -52,6 +39,8 @@ class MO_Test extends WP_UnitTestCase {
 	 * Test loading two files for same domain with different strings.
 	 *
 	 * @dataProvider mo_provider
+	 *
+	 * @param string $class Class loader to instantiate.
 	 */
 	public function test_loading_two_files_should_include_strings_of_both_files( $class ) {
 		$this->init( $class );
@@ -69,6 +58,8 @@ class MO_Test extends WP_UnitTestCase {
 	 * Test loading two files for same domain with same strings.
 	 *
 	 * @dataProvider mo_provider
+	 *
+	 * @param string $class Class loader to instantiate.
 	 */
 	public function test_loading_two_files_should_not_overwrite_first_strings( $class ) {
 		$this->init( $class );
@@ -83,6 +74,8 @@ class MO_Test extends WP_UnitTestCase {
 	 * Test merging two files.
 	 *
 	 * @dataProvider mo_provider
+	 *
+	 * @param string $class Class loader to instantiate.
 	 */
 	public function test_merge_should_keep_other_strings( $class ) {
 		$mo = new $class();
@@ -100,6 +93,8 @@ class MO_Test extends WP_UnitTestCase {
 	 * Just test that we don't have any error.
 	 *
 	 * @dataProvider mo_provider
+	 *
+	 * @param string $class Class loader to instantiate.
 	 */
 	public function test_merge_into_WP_MO( $class ) {
 		$wp_mo  = new \MO();
@@ -123,6 +118,8 @@ class MO_Test extends WP_UnitTestCase {
 	 * @see https://github.com/WordPress/wordpress-develop/blob/5.8.2/tests/phpunit/tests/l10n/loadTextdomainJustInTime.php#L63-L80
 	 *
 	 * @dataProvider mo_provider
+	 *
+	 * @param string $class Class loader to instantiate.
 	 */
 	public function test_load_just_in_time( $class ) {
 		$this->init( $class );

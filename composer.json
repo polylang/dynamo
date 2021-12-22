@@ -22,6 +22,11 @@
 			"src/"
 		]
 	},
+	"autoload-dev": {
+		"classmap": [
+			"tests/phpunit"
+		]
+	},
 	"scripts": {
 		"test":"vendor/bin/phpunit",
 		"cs":"vendor/bin/phpcs",
