@@ -1,31 +1,13 @@
 <?php
 
-use WP_Syntex\DynaMo\Plugin as Plugin;
-
 /**
  * This class adds specific tests for bugs encountered with specific translation files.
  */
 class Specific_Test extends WP_UnitTestCase {
+	use File_Loader_Provider_Trait;
 
 	public function tear_down() {
 		unset( $GLOBALS['l10n'] );
-	}
-
-	public function mo_provider() {
-		return array(
-			array( 'WP_Syntex\DynaMo\Dynamic\MO' ),
-			array( 'WP_Syntex\DynaMo\Full\MO' ),
-		);
-	}
-
-	protected function init( $class ) {
-		add_filter(
-			'dynamo_file_loader',
-			function() use ( $class ) {
-				return new $class();
-			}
-		);
-		( new Plugin() )->add_hooks();
 	}
 
 	/**
@@ -33,6 +15,8 @@ class Specific_Test extends WP_UnitTestCase {
 	 * during the development of the inital version.
 	 *
 	 * @dataProvider mo_provider
+	 *
+	 * @param string $class Class loader to instantiate.
 	 */
 	public function test_shipment_tracking( $class ) {
 		$this->init( $class );
