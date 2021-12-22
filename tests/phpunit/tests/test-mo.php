@@ -1,6 +1,7 @@
 <?php
 
 class MO_Test extends WP_UnitTestCase {
+	use Init_Trait;
 	use File_Loader_Provider_Trait;
 
 	public function tear_down() {

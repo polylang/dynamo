@@ -4,6 +4,7 @@
  * This class adds specific tests for bugs encountered with specific translation files.
  */
 class Specific_Test extends WP_UnitTestCase {
+	use Init_Trait;
 	use File_Loader_Provider_Trait;
 
 	public function tear_down() {
