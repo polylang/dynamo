@@ -76,4 +76,20 @@ class External_Cache_Test extends WP_UnitTestCase {
 		load_textdomain( 'default', $filename );
 		$this->assertSame( 1, $count );
 	}
+
+	public function test_mo_from_file_and_from_cache_are_equals() {
+		$filename = TEST_DATA_DIR . 'some_translations.mo';
+		( new Plugin() )->add_hooks();
+
+		load_textdomain( 'default', $filename );
+		$mo_from_file = $GLOBALS['l10n']['default'];
+		unset( $GLOBALS['l10n'] );
+
+		load_textdomain( 'default', $filename );
+		$mo_from_cache = $GLOBALS['l10n']['default'];
+
+		// The 2 objects are clones but not the same.
+		$this->assertEquals( $mo_from_file, $mo_from_cache );
+		$this->assertNotSame( $mo_from_file, $mo_from_cache );
+	}
 }
