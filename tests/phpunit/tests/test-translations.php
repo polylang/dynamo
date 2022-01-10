@@ -9,25 +9,30 @@ class Translations_Test extends WP_UnitTestCase {
 
 	public function setup_test( $class, $mofile ) {
 		$this->init( $class );
-		load_textdomain( 'default', $mofile );
+		load_textdomain( 'default', TEST_DATA_DIR . $mofile );
 	}
 
 	public function data_provider() {
 		return array(
 			array(
+				// WordPress, to make sure that we reproduce the same behavior.
+				'\MO',
+				'sl_SI_with_hash_table.mo',
+			),
+			array(
 				// Hash search.
 				'\WP_Syntex\DynaMo\Dynamic\MO',
-				TEST_DATA_DIR . 'sl_SI_with_hash_table.mo',
+				'sl_SI_with_hash_table.mo',
 			),
 			array(
 				// Binary search.
 				'\WP_Syntex\DynaMo\Dynamic\MO',
-				TEST_DATA_DIR . 'sl_SI_without_hash_table.mo',
+				'sl_SI_without_hash_table.mo',
 			),
 			array(
 				// Full load.
 				'\WP_Syntex\DynaMo\Full\MO',
-				TEST_DATA_DIR . 'sl_SI_without_hash_table.mo',
+				'sl_SI_without_hash_table.mo',
 			),
 		);
 	}
@@ -189,5 +194,37 @@ class Translations_Test extends WP_UnitTestCase {
 	public function test_translate_empty_string( $class, $mofile ) {
 		$this->setup_test( $class, $mofile );
 		$this->assertSame( '', translate( '' ) ); // phpcs:ignore WordPress.WP.I18n.NoEmptyStrings, WordPress.WP.I18n.LowLevelTranslationFunction
+	}
+
+	/**
+	 * Although it should be wrong to translate the singular form of a plural string with __(),
+	 * WPML does and well... WordPress returns the correct value. So we should do it either.
+	 * Here, the wrong call to __() is made before the right call to _n() to test the impact of cache.
+	 *
+	 * @dataProvider data_provider
+	 *
+	 * @param string $class  Class loader to instantiate.
+	 * @param string $mofile Translation file to load.
+	 */
+	public function test_translate_singular_plural_form_with_singular_singular_first( $class, $mofile ) {
+		$this->setup_test( $class, $mofile );
+		$this->assertSame( '%s razpoložljiva posodobitev', __( '%s update available' ) );
+		$this->assertSame( '%s razpoložljiva posodobitev', _n( '%s update available', '%s updates available', 1 ) ); // 1, 101, 201
+	}
+
+	/**
+	 * Although it should be wrong to translate the singular form of a plural string with __(),
+	 * WPML does and well... WordPress returns the correct value. So we should do it either.
+	 * Here, the wrong call to __() is made after the right call to _n() to test the impact of cache.
+	 *
+	 * @dataProvider data_provider
+	 *
+	 * @param string $class  Class loader to instantiate.
+	 * @param string $mofile Translation file to load.
+	 */
+	public function test_translate_singular_plural_form_with_singular_plural_first( $class, $mofile ) {
+		$this->setup_test( $class, $mofile );
+		$this->assertSame( '%s razpoložljiva posodobitev', _n( '%s update available', '%s updates available', 1 ) ); // 1, 101, 201
+		$this->assertSame( '%s razpoložljiva posodobitev', __( '%s update available' ) );
 	}
 }
