@@ -51,6 +51,6 @@ class External_Cache_Test extends WP_UnitTestCase {
 		$this->assertArrayHasKey( 'plural_forms', $cache );
 		$this->assertIsString( $cache['plural_forms'] );
 		$this->assertArrayHasKey( 'translations', $cache );
-		$this->assertCount( 4, $cache['translations'] ); // The number of translations in this .mo file.
+		$this->assertCount( 5, $cache['translations'] ); // The number of translations in this .mo file, including the empty string.
 	}
 }

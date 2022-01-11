@@ -93,9 +93,10 @@ class MO extends \WP_Syntex\DynaMo\MO {
 			return false;
 		}
 
-		$plural_expression  = $reader->get_plural_expression();
-		$this->plural_forms = new \Plural_Forms( $plural_expression );
-		$this->container    = $reader->get_translations();
+		$plural_expression   = $reader->get_plural_expression();
+		$this->plural_forms  = new \Plural_Forms( $plural_expression );
+		$this->container     = $reader->get_translations();
+		$this->container[''] = ''; // _get_plugin_data_markup_translate() may call translate() with an empty string.
 
 		// It's useless to cache anything if external object cache is not available.
 		if ( $using_ext_cache ) {
@@ -150,11 +151,6 @@ class MO extends \WP_Syntex\DynaMo\MO {
 	 * @return string
 	 */
 	public function translate( $singular, $context = null ) {
-		// _get_plugin_data_markup_translate() may call translate() with an empty string.
-		if ( empty( $singular ) ) {
-			return $singular;
-		}
-
 		$key = ! $context ? $singular : $context . "\4" . $singular;
 
 		if ( isset( $this->container[ $key ] ) ) {
