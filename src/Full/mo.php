@@ -154,7 +154,8 @@ class MO extends \WP_Syntex\DynaMo\MO {
 		$key = ! $context ? $singular : $context . "\4" . $singular;
 
 		if ( isset( $this->container[ $key ] ) ) {
-			return $this->container[ $key ];
+			$parts = explode( "\0", $this->container[ $key ] );
+			return $parts[0];
 		}
 
 		return $singular;
