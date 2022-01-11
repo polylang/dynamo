@@ -19,7 +19,7 @@
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
  *
- * Copyright 2021 WP SYNTEX
+ * Copyright 2021-2022 WP SYNTEX
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
