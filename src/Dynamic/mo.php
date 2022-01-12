@@ -102,16 +102,19 @@ class MO extends \WP_Syntex\DynaMo\MO {
 	public function translate( $singular, $context = null ) {
 		$key = ! $context ? $singular : $context . "\4" . $singular;
 
-		if ( isset( $this->container[ $key ] ) ) {
-			return $this->container[ $key ];
+		if ( ! isset( $this->container[ $key ] ) ) {
+			foreach ( $this->items as $item ) {
+				$translation = $item->get_translation( $key );
+				if ( ! empty( $translation ) ) {
+					$this->container[ $key ] = $translation;
+					break;
+				}
+			}
 		}
 
-		foreach ( $this->items as $item ) {
-			$translation = $item->get_translation( $key );
-			if ( ! empty( $translation ) ) {
-				$this->container[ $key ] = $translation;
-				return $translation;
-			}
+		if ( isset( $this->container[ $key ] ) ) {
+			$parts = explode( "\0", $this->container[ $key ] );
+			return $parts[0];
 		}
 
 		$this->container[ $key ] = $singular; // Default in case we don't find a translation.
