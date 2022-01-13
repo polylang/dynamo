@@ -197,9 +197,9 @@ class Translations_Test extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Although it should be wrong to translate the singular form of a plural string with __(),
-	 * WPML does and well... WordPress returns the correct value. So we should do it either.
-	 * Here, the wrong call to __() is made before the right call to _n() to test the impact of cache.
+	 * It's possible that a plugin translates the same (singular) string with __() and _n().
+	 * This doesn't break WordPress and is exploited at least in WPML and Query Monitor.
+	 * Here, the call to __() is made before the right call to _n() to test the impact of cache.
 	 *
 	 * @dataProvider data_provider
 	 *
@@ -213,9 +213,9 @@ class Translations_Test extends WP_UnitTestCase {
 	}
 
 	/**
-	 * Although it should be wrong to translate the singular form of a plural string with __(),
-	 * WPML does and well... WordPress returns the correct value. So we should do it either.
-	 * Here, the wrong call to __() is made after the right call to _n() to test the impact of cache.
+	 * It's possible that a plugin translates the same (singular) string with __() and _n().
+	 * This doesn't break WordPress and is exploited at least in WPML and Query Monitor.
+	 * Here, the call to __() is made after the right call to _n() to test the impact of cache.
 	 *
 	 * @dataProvider data_provider
 	 *
