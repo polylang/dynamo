@@ -41,5 +41,10 @@
 		"cs":"Runs PHPCS linter.",
 		"stan": "Runs PHPStan analysis.",
 		"lint": "Runs both PHPCS and PHPStan."
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
 	}
 }
