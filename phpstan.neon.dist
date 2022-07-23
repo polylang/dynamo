@@ -6,4 +6,4 @@ parameters:
 		- dynamo.php
 		- src/
 	ignoreErrors:
-		- '#^Function apply_filters invoked with [34567] parameters, 2 required\.$#'
+		- '#^Parameter \#2 \$length of function fread expects int<0, max>, int given\.$#'
