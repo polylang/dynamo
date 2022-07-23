@@ -67,7 +67,7 @@ class MO extends \WP_Syntex\DynaMo\MO {
 			$key          = md5( $filename ) . ":$last_changed";
 			$cache        = wp_cache_get( $key, self::CACHE_GROUP );
 
-			if ( false !== $cache ) {
+			if ( is_array( $cache ) ) {
 				$this->container    = $cache['translations'];
 				$this->plural_forms = new \Plural_Forms( $cache['plural_forms'] );
 				return true;
