@@ -53,4 +53,27 @@ class External_Cache_Test extends WP_UnitTestCase {
 		$this->assertArrayHasKey( 'translations', $cache );
 		$this->assertCount( 5, $cache['translations'] ); // The number of translations in this .mo file, including the empty string.
 	}
+
+	public function test_write_to_cache_only_once() {
+		wp_cache_delete( 'last_changed', self::CACHE_GROUP );
+		$count = 0;
+
+		// A trick to count how many times cache is written.
+		add_filter(
+			'dynamo_cache_expire',
+			function( $expire ) use ( &$count ) {
+				$count++;
+				return $expire;
+			}
+		);
+
+		$filename = TEST_DATA_DIR . 'some_translations.mo';
+		( new Plugin() )->add_hooks();
+
+		load_textdomain( 'default', $filename );
+		$this->assertSame( 1, $count );
+
+		load_textdomain( 'default', $filename );
+		$this->assertSame( 1, $count );
+	}
 }
