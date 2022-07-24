@@ -6,12 +6,9 @@ class External_Cache_Test extends WP_UnitTestCase {
 
 	const CACHE_GROUP = 'DynaMo';
 
-	const LAST_CHANGED = 1;
-
 	public function set_up() {
 		$this->using_ext_cache = (bool) wp_using_ext_object_cache();
 		wp_using_ext_object_cache( true ); // Fake external object cache.
-		wp_cache_set( 'last_changed', self::LAST_CHANGED, self::CACHE_GROUP );
 	}
 
 	public function tear_down() {
@@ -22,29 +19,35 @@ class External_Cache_Test extends WP_UnitTestCase {
 	}
 
 	public function test_read_translations_from_cache() {
-		$last_changed = wp_cache_get_last_changed( self::CACHE_GROUP );
-		$key          = md5( 'some_translations.mo' ) . ':' . self::LAST_CHANGED;
+		$filename     = TEST_DATA_DIR . 'some_translations.mo';
+		$last_changed = microtime();
+		$key          = md5( $filename ) . ':' . $last_changed;
 		$to_cache     = array(
 			'plural_forms' => 'n > 1',
 			'translations' => array(
 				'She let the balloon float up into the air with her hopes and dreams.' => 'Elle a laissé le ballon flotter dans les airs avec ses espoirs et ses rêves.',
 			),
 		);
+
+		wp_cache_set( 'last_changed', $last_changed, self::CACHE_GROUP );
 		wp_cache_set( $key, $to_cache, self::CACHE_GROUP );
 
 		( new Plugin() )->add_hooks();
-		load_textdomain( 'default', 'some_translations.mo' );
+		load_textdomain( 'default', $filename );
 
 		$this->assertSame( 'Elle a laissé le ballon flotter dans les airs avec ses espoirs et ses rêves.', __( 'She let the balloon float up into the air with her hopes and dreams.' ) );
 	}
 
 	public function test_write_translations_to_cache() {
-		$filename = TEST_DATA_DIR . 'some_translations.mo';
+		$filename     = TEST_DATA_DIR . 'some_translations.mo';
+		$last_changed = microtime();
+		$key          = md5( $filename ) . ':' . $last_changed;
+
+		wp_cache_set( 'last_changed', $last_changed, self::CACHE_GROUP );
 
 		( new Plugin() )->add_hooks();
 		load_textdomain( 'default', $filename );
 
-		$key   = md5( $filename ) . ':' . self::LAST_CHANGED;
 		$cache = wp_cache_get( $key, self::CACHE_GROUP );
 
 		$this->assertCount( 2, $cache );
@@ -55,10 +58,9 @@ class External_Cache_Test extends WP_UnitTestCase {
 	}
 
 	public function test_write_to_cache_only_once() {
-		wp_cache_delete( 'last_changed', self::CACHE_GROUP );
 		$count = 0;
 
-		// A trick to count how many times cache is written.
+		// A trick to count how many times the cache is written.
 		add_filter(
 			'dynamo_cache_expire',
 			function( $expire ) use ( &$count ) {
