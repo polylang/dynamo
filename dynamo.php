@@ -9,7 +9,7 @@
  * @wordpress-plugin
  * Plugin Name:       DynaMo
  * Description:       Improves the WordPress translations performance
- * Version:           1.1-dev
+ * Version:           1.1
  * Requires at least: 5.2
  * Requires PHP:      5.6
  * Author:            WP SYNTEX
