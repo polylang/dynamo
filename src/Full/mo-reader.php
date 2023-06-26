@@ -90,12 +90,14 @@ class MO_Reader extends \WP_Syntex\DynaMo\MO_Reader {
 		}
 
 		for ( $i = 0; $i < $header['total']; $i++ ) {
-			\fseek( $handle, (int) $translations[ 2 * $i + 2 ] );
-			$translation = (string) \fread( $handle, (int) $translations[ 2 * $i + 1 ] );
-			if ( '' === $o[ $i ] ) {
-				$this->plural_expression = $this->parse_plural_forms_expression( $translation );
-			} else {
-				$this->translations[ $o[ $i ] ] = $translation;
+			if ( $translations[ 2 * $i + 1 ] > 0 ) {
+				\fseek( $handle, (int) $translations[ 2 * $i + 2 ] );
+				$translation = (string) \fread( $handle, (int) $translations[ 2 * $i + 1 ] );
+				if ( '' === $o[ $i ] ) {
+					$this->plural_expression = $this->parse_plural_forms_expression( $translation );
+				} else {
+					$this->translations[ $o[ $i ] ] = $translation;
+				}
 			}
 		}
 

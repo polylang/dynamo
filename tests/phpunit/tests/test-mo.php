@@ -133,4 +133,20 @@ class MO_Test extends WP_UnitTestCase {
 		$this->assertTrue( is_textdomain_loaded( 'internationalized-plugin' ) );
 		$this->assertTrue( $GLOBALS['l10n']['internationalized-plugin'] instanceof $class );
 	}
+
+	/**
+	 * WPML can generate MO files without translations headers.
+	 *
+	 * @see https://github.com/polylang/dynamo/issues/23
+	 *
+	 * @dataProvider mo_provider
+	 *
+	 * @param string $class Class loader to instantiate.
+	 */
+	public function test_mofile_without_translations_headers( $class ) {
+		$this->init( $class );
+		load_textdomain( 'gravity_form-1', TEST_DATA_DIR . 'gravity_form-1-de_DE.mo' );
+
+		$this->assertSame( 'First Name', __( 'field-1-label', 'gravity_form-1' ) );
+	}
 }
