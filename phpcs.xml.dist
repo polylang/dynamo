@@ -26,6 +26,8 @@
 		<exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fread" />
 	</rule>
 
+	<rule ref="Squiz.Classes.ClassFileName" />
+
 	<rule ref="Squiz.Commenting.ClassComment" >
 		<exclude-pattern>*/tests/*</exclude-pattern>
 	</rule>
