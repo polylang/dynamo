@@ -9,7 +9,7 @@
  * @wordpress-plugin
  * Plugin Name:       DynaMo
  * Description:       Improves the WordPress translations performance
- * Version:           1.1
+ * Version:           1.2
  * Requires at least: 5.2
  * Requires PHP:      7.0
  * Author:            WP SYNTEX
@@ -19,7 +19,7 @@
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.txt
  *
- * Copyright 2021-2022 WP SYNTEX
+ * Copyright 2021-2023 WP SYNTEX
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
