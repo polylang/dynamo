@@ -20,6 +20,7 @@
 
 	<rule ref="WordPress">
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 		<exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fclose" />
 		<exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fopen" />
 		<exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fread" />
@@ -36,11 +37,11 @@
 	<rule ref="Squiz.Commenting.FunctionComment" >
 		<exclude-pattern>*/tests/*</exclude-pattern>
 	</rule>
-		
+
 	<rule ref="WordPress.WP.I18n.MissingTranslatorsComment" >
 		<exclude-pattern>*/tests/*</exclude-pattern>
 	</rule>
-	
+
 	<exclude-pattern>vendor/*</exclude-pattern>
 	<exclude-pattern>tmp/*</exclude-pattern>
 </ruleset>
