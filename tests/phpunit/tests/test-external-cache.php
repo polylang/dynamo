@@ -8,6 +8,8 @@ class External_Cache_Test extends WP_UnitTestCase {
 
 	/**
 	 * Stores the returned value of wp_using_ext_object_cache().
+	 *
+	 * @var bool
 	 */
 	protected $using_ext_cache;
 
