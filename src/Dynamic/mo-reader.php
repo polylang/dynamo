@@ -103,7 +103,7 @@ class MO_Reader extends \WP_Syntex\DynaMo\MO_Reader {
 
 		// Search the translation headers (usually at first position) and use them to get the plural expression.
 		$headers_idx = array_search( 0, $originals, true );
-		if ( false !== $headers_idx && ! empty( $translations[ (int) $headers_idx ] ) ) {
+		if ( false !== $headers_idx && $translations[ (int) $headers_idx ] > 0 ) {
 			fseek( $handle, $translations[ (int) $headers_idx + 1 ] );
 			$headers = fread( $handle, $translations[ (int) $headers_idx ] );
 
