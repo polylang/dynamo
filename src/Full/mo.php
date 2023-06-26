@@ -111,14 +111,14 @@ class MO extends \WP_Syntex\DynaMo\MO {
 			 */
 			$expire = apply_filters( 'dynamo_cache_expire', 12 * HOUR_IN_SECONDS, $filename );
 
-			wp_cache_set(
+			wp_cache_set( // phpcs:ignore WordPressVIPMinimum.Performance.LowExpiryCacheTime
 				$key,
 				array(
 					'plural_forms' => $plural_expression,
 					'translations' => $this->container,
 				),
 				self::CACHE_GROUP,
-				$expire // phpcs:ignore WordPressVIPMinimum.Performance.LowExpiryCacheTime.CacheTimeUndetermined
+				$expire
 			);
 		}
 
