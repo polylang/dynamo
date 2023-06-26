@@ -19,7 +19,7 @@ abstract class MO_Reader {
 	 *
 	 * @var string
 	 */
-	protected $plural_expression;
+	protected $plural_expression = '';
 
 	/**
 	 * Parses the MO file.
