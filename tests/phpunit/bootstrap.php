@@ -1,6 +1,6 @@
 <?php
 
-$_root_dir  = dirname( dirname( dirname( __DIR__ ) ) );
+$_root_dir  = dirname( dirname( __DIR__ ) );
 $_tests_dir = $_root_dir . '/tmp/wordpress-tests-lib';
 require_once $_tests_dir . '/includes/functions.php';
 
@@ -14,7 +14,7 @@ if ( ! defined( 'DIR_TESTROOT' ) ) {
 }
 
 if ( ! defined( 'TEST_DATA_DIR' ) ) {
-	define( 'TEST_DATA_DIR', dirname( __DIR__ ) . '/data/' );
+	define( 'TEST_DATA_DIR', __DIR__ . '/data/' );
 }
 
 printf(

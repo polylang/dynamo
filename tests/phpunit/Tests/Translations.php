@@ -1,7 +1,8 @@
 <?php
 
-class Translations_Test extends WP_UnitTestCase {
-	use Init_Trait;
+namespace WP_Syntex\DynaMo\Tests;
+
+class Translations extends \WP_Syntex\DynaMo\TestCase {
 
 	public function tear_down() {
 		unset( $GLOBALS['l10n'] );

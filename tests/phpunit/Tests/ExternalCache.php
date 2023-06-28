@@ -1,8 +1,10 @@
 <?php
 
+namespace WP_Syntex\DynaMo\Tests;
+
 use WP_Syntex\DynaMo\Plugin as Plugin;
 
-class External_Cache_Test extends WP_UnitTestCase {
+class ExternalCache extends \WP_UnitTestCase {
 
 	const CACHE_GROUP = 'DynaMo';
 
