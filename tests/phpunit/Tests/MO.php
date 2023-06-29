@@ -1,8 +1,8 @@
 <?php
 
-class MO_Test extends WP_UnitTestCase {
-	use Init_Trait;
-	use File_Loader_Provider_Trait;
+namespace WP_Syntex\DynaMo\Tests;
+
+class MO extends \WP_Syntex\DynaMo\TestCase {
 
 	public function tear_down() {
 		unset( $GLOBALS['l10n'] );
@@ -12,7 +12,8 @@ class MO_Test extends WP_UnitTestCase {
 	/**
 	 * Make sure load_textdomain() loads our class.
 	 *
-	 * @dataProvider mo_provider
+	 * @testWith ["WP_Syntex\\DynaMo\\Dynamic\\MO"]
+	 *           ["WP_Syntex\\DynaMo\\Full\\MO"]
 	 *
 	 * @param string $class Class loader to instantiate.
 	 */
@@ -25,7 +26,8 @@ class MO_Test extends WP_UnitTestCase {
 	/**
 	 * Test to read a wrong file.
 	 *
-	 * @dataProvider mo_provider
+	 * @testWith ["Dynamic"]
+	 *           ["Full"]
 	 *
 	 * @param string $class Class loader to instantiate.
 	 */
@@ -38,7 +40,8 @@ class MO_Test extends WP_UnitTestCase {
 	/**
 	 * Test loading two files for same domain with different strings.
 	 *
-	 * @dataProvider mo_provider
+	 * @testWith ["Dynamic"]
+	 *           ["Full"]
 	 *
 	 * @param string $class Class loader to instantiate.
 	 */
@@ -57,7 +60,8 @@ class MO_Test extends WP_UnitTestCase {
 	/**
 	 * Test loading two files for same domain with same strings.
 	 *
-	 * @dataProvider mo_provider
+	 * @testWith ["Dynamic"]
+	 *           ["Full"]
 	 *
 	 * @param string $class Class loader to instantiate.
 	 */
@@ -73,7 +77,8 @@ class MO_Test extends WP_UnitTestCase {
 	/**
 	 * Test merging two files.
 	 *
-	 * @dataProvider mo_provider
+	 * @testWith ["WP_Syntex\\DynaMo\\Dynamic\\MO"]
+	 *           ["WP_Syntex\\DynaMo\\Full\\MO"]
 	 *
 	 * @param string $class Class loader to instantiate.
 	 */
@@ -92,7 +97,8 @@ class MO_Test extends WP_UnitTestCase {
 	/**
 	 * Just test that we don't have any error.
 	 *
-	 * @dataProvider mo_provider
+	 * @testWith ["WP_Syntex\\DynaMo\\Dynamic\\MO"]
+	 *           ["WP_Syntex\\DynaMo\\Full\\MO"]
 	 *
 	 * @param string $class Class loader to instantiate.
 	 */
@@ -117,7 +123,8 @@ class MO_Test extends WP_UnitTestCase {
 	 *
 	 * @see https://github.com/WordPress/wordpress-develop/blob/5.8.2/tests/phpunit/tests/l10n/loadTextdomainJustInTime.php#L63-L80
 	 *
-	 * @dataProvider mo_provider
+	 * @testWith ["WP_Syntex\\DynaMo\\Dynamic\\MO"]
+	 *           ["WP_Syntex\\DynaMo\\Full\\MO"]
 	 *
 	 * @param string $class Class loader to instantiate.
 	 */
@@ -139,7 +146,8 @@ class MO_Test extends WP_UnitTestCase {
 	 *
 	 * @see https://github.com/polylang/dynamo/issues/23
 	 *
-	 * @dataProvider mo_provider
+	 * @testWith ["Dynamic"]
+	 *           ["Full"]
 	 *
 	 * @param string $class Class loader to instantiate.
 	 */

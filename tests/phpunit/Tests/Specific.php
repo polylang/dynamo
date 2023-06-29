@@ -1,11 +1,11 @@
 <?php
 
+namespace WP_Syntex\DynaMo\Tests;
+
 /**
  * This class adds specific tests for bugs encountered with specific translation files.
  */
-class Specific_Test extends WP_UnitTestCase {
-	use Init_Trait;
-	use File_Loader_Provider_Trait;
+class Specific extends \WP_Syntex\DynaMo\TestCase {
 
 	public function tear_down() {
 		unset( $GLOBALS['l10n'] );
@@ -15,7 +15,8 @@ class Specific_Test extends WP_UnitTestCase {
 	 * Test a WC Shipment tracking translation file which generated a notice
 	 * during the development of the inital version.
 	 *
-	 * @dataProvider mo_provider
+	 * @testWith ["Dynamic"]
+	 *           ["Full"]
 	 *
 	 * @param string $class Class loader to instantiate.
 	 */
