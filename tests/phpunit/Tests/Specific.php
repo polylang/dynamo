@@ -5,7 +5,7 @@ namespace WP_Syntex\DynaMo\Tests;
 /**
  * This class adds specific tests for bugs encountered with specific translation files.
  */
-class Specific extends \WP_Syntex\DynaMo\TestCase  {
+class Specific extends \WP_Syntex\DynaMo\TestCase {
 
 	public function tear_down() {
 		unset( $GLOBALS['l10n'] );

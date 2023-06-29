@@ -2,7 +2,7 @@
 
 namespace WP_Syntex\DynaMo\Tests;
 
-class MO extends \WP_Syntex\DynaMo\TestCase  {
+class MO extends \WP_Syntex\DynaMo\TestCase {
 
 	public function tear_down() {
 		unset( $GLOBALS['l10n'] );
