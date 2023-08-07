@@ -128,14 +128,14 @@ abstract class MO_Reader {
 	 *
 	 * @since 1.0
 	 *
-	 * @param string $string The string.
+	 * @param string $the_string The string.
 	 * @return int
 	 */
-	protected static function strlen( $string ) {
+	protected static function strlen( $the_string ) {
 		if ( function_exists( 'mb_strlen' ) && ( (int) ini_get( 'mbstring.func_overload' ) & 2 ) ) { // phpcs:ignore PHPCompatibility.IniDirectives.RemovedIniDirectives.mbstring_func_overloadDeprecated
-			return mb_strlen( $string, 'ascii' );
+			return mb_strlen( $the_string, 'ascii' );
 		} else {
-			return strlen( $string );
+			return strlen( $the_string );
 		}
 	}
 

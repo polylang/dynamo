@@ -8,8 +8,8 @@ class Translations extends \WP_Syntex\DynaMo\TestCase {
 		unset( $GLOBALS['l10n'] );
 	}
 
-	public function setup_test( $class, $mofile ) {
-		$this->init( $class );
+	public function setup_test( $the_class, $mofile ) {
+		$this->init( $the_class );
 		load_textdomain( 'default', TEST_DATA_DIR . $mofile );
 	}
 
@@ -44,11 +44,11 @@ class Translations extends \WP_Syntex\DynaMo\TestCase {
 	 *
 	 * @dataProvider data_provider
 	 *
-	 * @param string $class  Class loader to instantiate.
-	 * @param string $mofile Translation file to load.
+	 * @param string $the_class Class loader to instantiate.
+	 * @param string $mofile    Translation file to load.
 	 */
-	public function test_translate_singular( $class, $mofile ) {
-		$this->setup_test( $class, $mofile );
+	public function test_translate_singular( $the_class, $mofile ) {
+		$this->setup_test( $the_class, $mofile );
 		$this->assertSame( '&laquo; Nazaj', __( '&laquo; Previous' ) );
 		$this->assertSame( '&laquo; Prejšnja stran', __( '&laquo; Previous Page' ) );
 		$this->assertSame( 'Omogoči', __( 'Activate' ) );
@@ -60,11 +60,11 @@ class Translations extends \WP_Syntex\DynaMo\TestCase {
 	 *
 	 * @dataProvider data_provider
 	 *
-	 * @param string $class  Class loader to instantiate.
-	 * @param string $mofile Translation file to load.
+	 * @param string $the_class Class loader to instantiate.
+	 * @param string $mofile    Translation file to load.
 	 */
-	public function test_translate_with_context( $class, $mofile ) {
-		$this->setup_test( $class, $mofile );
+	public function test_translate_with_context( $the_class, $mofile ) {
+		$this->setup_test( $the_class, $mofile );
 		$this->assertSame( 'Kategorija', _x( 'Category', 'taxonomy singular name' ) );
 	}
 
@@ -74,11 +74,11 @@ class Translations extends \WP_Syntex\DynaMo\TestCase {
 	 *
 	 * @dataProvider data_provider
 	 *
-	 * @param string $class  Class loader to instantiate.
-	 * @param string $mofile Translation file to load.
+	 * @param string $the_class Class loader to instantiate.
+	 * @param string $mofile    Translation file to load.
 	 */
-	public function test_translate_plurals( $class, $mofile ) {
-		$this->setup_test( $class, $mofile );
+	public function test_translate_plurals( $the_class, $mofile ) {
+		$this->setup_test( $the_class, $mofile );
 		$this->assertSame( '%s razpoložljiva posodobitev', _n( '%s update available', '%s updates available', 101 ) ); // 1, 101, 201
 		$this->assertSame( '%s razpoložljivi posodobitvi', _n( '%s update available', '%s updates available', 102 ) ); // 2, 102, 202
 		$this->assertSame( '%s razpoložljive posodobitve', _n( '%s update available', '%s updates available', 103 ) ); // 3, 4, 103
@@ -90,11 +90,11 @@ class Translations extends \WP_Syntex\DynaMo\TestCase {
 	 *
 	 * @dataProvider data_provider
 	 *
-	 * @param string $class  Class loader to instantiate.
-	 * @param string $mofile Translation file to load.
+	 * @param string $the_class Class loader to instantiate.
+	 * @param string $mofile    Translation file to load.
 	 */
-	public function test_non_existing_singular( $class, $mofile ) {
-		$this->setup_test( $class, $mofile );
+	public function test_non_existing_singular( $the_class, $mofile ) {
+		$this->setup_test( $the_class, $mofile );
 		$this->assertSame( 'Bla Bla Bla', __( 'Bla Bla Bla' ) );
 	}
 
@@ -103,11 +103,11 @@ class Translations extends \WP_Syntex\DynaMo\TestCase {
 	 *
 	 * @dataProvider data_provider
 	 *
-	 * @param string $class  Class loader to instantiate.
-	 * @param string $mofile Translation file to load.
+	 * @param string $the_class Class loader to instantiate.
+	 * @param string $mofile    Translation file to load.
 	 */
-	public function test_non_existing_with_context( $class, $mofile ) {
-		$this->setup_test( $class, $mofile );
+	public function test_non_existing_with_context( $the_class, $mofile ) {
+		$this->setup_test( $the_class, $mofile );
 		$this->assertSame( 'Bla Bla Bla', _x( 'Bla Bla Bla', 'Any context' ) );
 	}
 
@@ -116,11 +116,11 @@ class Translations extends \WP_Syntex\DynaMo\TestCase {
 	 *
 	 * @dataProvider data_provider
 	 *
-	 * @param string $class  Class loader to instantiate.
-	 * @param string $mofile Translation file to load.
+	 * @param string $the_class Class loader to instantiate.
+	 * @param string $mofile    Translation file to load.
 	 */
-	public function test_non_existing_plural( $class, $mofile ) {
-		$this->setup_test( $class, $mofile );
+	public function test_non_existing_plural( $the_class, $mofile ) {
+		$this->setup_test( $the_class, $mofile );
 		$this->assertSame( '%s horse galloping in the meadow', _n( '%s horse galloping in the meadow', '%s horses galloping in the meadow', 1 ) );
 		$this->assertSame( '%s horses galloping in the meadow', _n( '%s horse galloping in the meadow', '%s horses galloping in the meadow', 101 ) );
 		$this->assertSame( '%s horses galloping in the meadow', _n( '%s horse galloping in the meadow', '%s horses galloping in the meadow', 102 ) );
@@ -131,11 +131,11 @@ class Translations extends \WP_Syntex\DynaMo\TestCase {
 	 *
 	 * @dataProvider data_provider
 	 *
-	 * @param string $class  Class loader to instantiate.
-	 * @param string $mofile Translation file to load.
+	 * @param string $the_class Class loader to instantiate.
+	 * @param string $mofile    Translation file to load.
 	 */
-	public function test_translate_two_times_singular( $class, $mofile ) {
-		$this->setup_test( $class, $mofile );
+	public function test_translate_two_times_singular( $the_class, $mofile ) {
+		$this->setup_test( $the_class, $mofile );
 		$this->assertSame( 'november', __( 'November' ) );
 		$this->assertSame( 'november', __( 'November' ) );
 	}
@@ -145,11 +145,11 @@ class Translations extends \WP_Syntex\DynaMo\TestCase {
 	 *
 	 * @dataProvider data_provider
 	 *
-	 * @param string $class  Class loader to instantiate.
-	 * @param string $mofile Translation file to load.
+	 * @param string $the_class Class loader to instantiate.
+	 * @param string $mofile    Translation file to load.
 	 */
-	public function test_translate_two_times_with_context( $class, $mofile ) {
-		$this->setup_test( $class, $mofile );
+	public function test_translate_two_times_with_context( $the_class, $mofile ) {
+		$this->setup_test( $the_class, $mofile );
 		$this->assertSame( 'novembra', _x( 'November', 'genitive' ) );
 		$this->assertSame( 'novembra', _x( 'November', 'genitive' ) );
 	}
@@ -159,11 +159,11 @@ class Translations extends \WP_Syntex\DynaMo\TestCase {
 	 *
 	 * @dataProvider data_provider
 	 *
-	 * @param string $class  Class loader to instantiate.
-	 * @param string $mofile Translation file to load.
+	 * @param string $the_class Class loader to instantiate.
+	 * @param string $mofile    Translation file to load.
 	 */
-	public function test_translate_singular_and_with_context_after( $class, $mofile ) {
-		$this->setup_test( $class, $mofile );
+	public function test_translate_singular_and_with_context_after( $the_class, $mofile ) {
+		$this->setup_test( $the_class, $mofile );
 		$this->assertSame( 'november', __( 'November' ) );
 		$this->assertSame( 'novembra', _x( 'November', 'genitive' ) );
 	}
@@ -173,11 +173,11 @@ class Translations extends \WP_Syntex\DynaMo\TestCase {
 	 *
 	 * @dataProvider data_provider
 	 *
-	 * @param string $class  Class loader to instantiate.
-	 * @param string $mofile Translation file to load.
+	 * @param string $the_class Class loader to instantiate.
+	 * @param string $mofile    Translation file to load.
 	 */
-	public function test_translate_with_context_and_singular_after( $class, $mofile ) {
-		$this->setup_test( $class, $mofile );
+	public function test_translate_with_context_and_singular_after( $the_class, $mofile ) {
+		$this->setup_test( $the_class, $mofile );
 		$this->assertSame( 'novembra', _x( 'November', 'genitive' ) );
 		$this->assertSame( 'november', __( 'November' ) );
 	}
@@ -189,11 +189,11 @@ class Translations extends \WP_Syntex\DynaMo\TestCase {
 	 *
 	 * @dataProvider data_provider
 	 *
-	 * @param string $class  Class loader to instantiate.
-	 * @param string $mofile Translation file to load.
+	 * @param string $the_class Class loader to instantiate.
+	 * @param string $mofile    Translation file to load.
 	 */
-	public function test_translate_empty_string( $class, $mofile ) {
-		$this->setup_test( $class, $mofile );
+	public function test_translate_empty_string( $the_class, $mofile ) {
+		$this->setup_test( $the_class, $mofile );
 		$this->assertSame( '', translate( '' ) ); // phpcs:ignore WordPress.WP.I18n.NoEmptyStrings, WordPress.WP.I18n.LowLevelTranslationFunction
 	}
 
@@ -204,11 +204,11 @@ class Translations extends \WP_Syntex\DynaMo\TestCase {
 	 *
 	 * @dataProvider data_provider
 	 *
-	 * @param string $class  Class loader to instantiate.
-	 * @param string $mofile Translation file to load.
+	 * @param string $the_class Class loader to instantiate.
+	 * @param string $mofile    Translation file to load.
 	 */
-	public function test_translate_singular_plural_form_with_singular_singular_first( $class, $mofile ) {
-		$this->setup_test( $class, $mofile );
+	public function test_translate_singular_plural_form_with_singular_singular_first( $the_class, $mofile ) {
+		$this->setup_test( $the_class, $mofile );
 		$this->assertSame( '%s razpoložljiva posodobitev', __( '%s update available' ) );
 		$this->assertSame( '%s razpoložljiva posodobitev', _n( '%s update available', '%s updates available', 1 ) ); // 1, 101, 201
 	}
@@ -220,11 +220,11 @@ class Translations extends \WP_Syntex\DynaMo\TestCase {
 	 *
 	 * @dataProvider data_provider
 	 *
-	 * @param string $class  Class loader to instantiate.
-	 * @param string $mofile Translation file to load.
+	 * @param string $the_class Class loader to instantiate.
+	 * @param string $mofile    Translation file to load.
 	 */
-	public function test_translate_singular_plural_form_with_singular_plural_first( $class, $mofile ) {
-		$this->setup_test( $class, $mofile );
+	public function test_translate_singular_plural_form_with_singular_plural_first( $the_class, $mofile ) {
+		$this->setup_test( $the_class, $mofile );
 		$this->assertSame( '%s razpoložljiva posodobitev', _n( '%s update available', '%s updates available', 1 ) ); // 1, 101, 201
 		$this->assertSame( '%s razpoložljiva posodobitev', __( '%s update available' ) );
 	}
