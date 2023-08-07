@@ -15,12 +15,12 @@ class MO extends \WP_Syntex\DynaMo\TestCase {
 	 * @testWith ["WP_Syntex\\DynaMo\\Dynamic\\MO"]
 	 *           ["WP_Syntex\\DynaMo\\Full\\MO"]
 	 *
-	 * @param string $class Class loader to instantiate.
+	 * @param string $the_class Class loader to instantiate.
 	 */
-	public function test_instance( $class ) {
-		$this->init( $class );
+	public function test_instance( $the_class ) {
+		$this->init( $the_class );
 		load_textdomain( 'domain', TEST_DATA_DIR . 'some_translations.mo' );
-		$this->assertTrue( $GLOBALS['l10n']['domain'] instanceof $class );
+		$this->assertTrue( $GLOBALS['l10n']['domain'] instanceof $the_class );
 	}
 
 	/**
@@ -29,10 +29,10 @@ class MO extends \WP_Syntex\DynaMo\TestCase {
 	 * @testWith ["Dynamic"]
 	 *           ["Full"]
 	 *
-	 * @param string $class Class loader to instantiate.
+	 * @param string $the_class Class loader to instantiate.
 	 */
-	public function test_unreadable_file( $class ) {
-		$this->init( $class );
+	public function test_unreadable_file( $the_class ) {
+		$this->init( $the_class );
 		load_textdomain( 'domain', 'some_unreadable_file.mo' );
 		$this->assertEmpty( $GLOBALS['l10n'] );
 	}
@@ -43,10 +43,10 @@ class MO extends \WP_Syntex\DynaMo\TestCase {
 	 * @testWith ["Dynamic"]
 	 *           ["Full"]
 	 *
-	 * @param string $class Class loader to instantiate.
+	 * @param string $the_class Class loader to instantiate.
 	 */
-	public function test_loading_two_files_should_include_strings_of_both_files( $class ) {
-		$this->init( $class );
+	public function test_loading_two_files_should_include_strings_of_both_files( $the_class ) {
+		$this->init( $the_class );
 		load_textdomain( 'default', TEST_DATA_DIR . 'automatic.mo' );
 		load_textdomain( 'default', TEST_DATA_DIR . 'some_translations.mo' );
 
@@ -63,10 +63,10 @@ class MO extends \WP_Syntex\DynaMo\TestCase {
 	 * @testWith ["Dynamic"]
 	 *           ["Full"]
 	 *
-	 * @param string $class Class loader to instantiate.
+	 * @param string $the_class Class loader to instantiate.
 	 */
-	public function test_loading_two_files_should_not_overwrite_first_strings( $class ) {
-		$this->init( $class );
+	public function test_loading_two_files_should_not_overwrite_first_strings( $the_class ) {
+		$this->init( $the_class );
 		load_textdomain( 'default', TEST_DATA_DIR . 'alternative.mo' );
 		load_textdomain( 'default', TEST_DATA_DIR . 'automatic.mo' );
 
@@ -80,13 +80,13 @@ class MO extends \WP_Syntex\DynaMo\TestCase {
 	 * @testWith ["WP_Syntex\\DynaMo\\Dynamic\\MO"]
 	 *           ["WP_Syntex\\DynaMo\\Full\\MO"]
 	 *
-	 * @param string $class Class loader to instantiate.
+	 * @param string $the_class Class loader to instantiate.
 	 */
-	public function test_merge_should_keep_other_strings( $class ) {
-		$mo = new $class();
+	public function test_merge_should_keep_other_strings( $the_class ) {
+		$mo = new $the_class();
 		$mo->import_from_file( TEST_DATA_DIR . 'alternative.mo' );
 
-		$other = new $class();
+		$other = new $the_class();
 		$other->import_from_file( TEST_DATA_DIR . 'automatic.mo' );
 
 		$mo->merge_with( $other );
@@ -100,11 +100,11 @@ class MO extends \WP_Syntex\DynaMo\TestCase {
 	 * @testWith ["WP_Syntex\\DynaMo\\Dynamic\\MO"]
 	 *           ["WP_Syntex\\DynaMo\\Full\\MO"]
 	 *
-	 * @param string $class Class loader to instantiate.
+	 * @param string $the_class Class loader to instantiate.
 	 */
-	public function test_merge_into_WP_MO( $class ) {
+	public function test_merge_into_WP_MO( $the_class ) {
 		$wp_mo  = new \MO();
-		$our_mo = new $class();
+		$our_mo = new $the_class();
 		$wp_mo->merge_with( $our_mo );
 		$this->assertTrue( $wp_mo instanceof \MO );
 	}
@@ -126,10 +126,10 @@ class MO extends \WP_Syntex\DynaMo\TestCase {
 	 * @testWith ["WP_Syntex\\DynaMo\\Dynamic\\MO"]
 	 *           ["WP_Syntex\\DynaMo\\Full\\MO"]
 	 *
-	 * @param string $class Class loader to instantiate.
+	 * @param string $the_class Class loader to instantiate.
 	 */
-	public function test_load_just_in_time( $class ) {
-		$this->init( $class );
+	public function test_load_just_in_time( $the_class ) {
+		$this->init( $the_class );
 
 		add_filter( 'locale', array( $this, 'filter_set_locale_to_german' ) );
 
@@ -138,7 +138,7 @@ class MO extends \WP_Syntex\DynaMo\TestCase {
 		$this->assertFalse( is_textdomain_loaded( 'internationalized-plugin' ) );
 		$this->assertSame( 'Das ist ein Dummy Plugin', i18n_plugin_test() );
 		$this->assertTrue( is_textdomain_loaded( 'internationalized-plugin' ) );
-		$this->assertTrue( $GLOBALS['l10n']['internationalized-plugin'] instanceof $class );
+		$this->assertTrue( $GLOBALS['l10n']['internationalized-plugin'] instanceof $the_class );
 	}
 
 	/**
@@ -149,10 +149,10 @@ class MO extends \WP_Syntex\DynaMo\TestCase {
 	 * @testWith ["Dynamic"]
 	 *           ["Full"]
 	 *
-	 * @param string $class Class loader to instantiate.
+	 * @param string $the_class Class loader to instantiate.
 	 */
-	public function test_mofile_without_translations_headers( $class ) {
-		$this->init( $class );
+	public function test_mofile_without_translations_headers( $the_class ) {
+		$this->init( $the_class );
 		load_textdomain( 'gravity_form-1', TEST_DATA_DIR . 'gravity_form-1-de_DE.mo' );
 
 		$this->assertSame( 'First Name', __( 'field-1-label', 'gravity_form-1' ) );

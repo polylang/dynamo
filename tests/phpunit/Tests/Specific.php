@@ -18,10 +18,10 @@ class Specific extends \WP_Syntex\DynaMo\TestCase {
 	 * @testWith ["Dynamic"]
 	 *           ["Full"]
 	 *
-	 * @param string $class Class loader to instantiate.
+	 * @param string $the_class Class loader to instantiate.
 	 */
-	public function test_shipment_tracking( $class ) {
-		$this->init( $class );
+	public function test_shipment_tracking( $the_class ) {
+		$this->init( $the_class );
 		load_textdomain( 'shipment-tracking', TEST_DATA_DIR . 'woocommerce-shipment-tracking-fr_FR.mo' );
 
 		// Call done by _get_plugin_data_markup_translate().
