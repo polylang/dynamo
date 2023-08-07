@@ -2,7 +2,7 @@
 
 namespace WP_Syntex\DynaMo;
 
-use WP_Syntex\DynaMo\Plugin as Plugin;
+use WP_Syntex\DynaMo\Plugin;
 
 class TestCase extends \WP_UnitTestCase {
 

@@ -2,7 +2,7 @@
 
 namespace WP_Syntex\DynaMo\Tests;
 
-use WP_Syntex\DynaMo\Plugin as Plugin;
+use WP_Syntex\DynaMo\Plugin;
 
 class ExternalCache extends \WP_UnitTestCase {
 
