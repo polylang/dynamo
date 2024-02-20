@@ -13,7 +13,7 @@ class Specific extends \WP_Syntex\DynaMo\TestCase {
 
 	/**
 	 * Test a WC Shipment tracking translation file which generated a notice
-	 * during the development of the inital version.
+	 * during the development of the initial version.
 	 *
 	 * @testWith ["Dynamic"]
 	 *           ["Full"]
