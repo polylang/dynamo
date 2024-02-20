@@ -1,6 +1,7 @@
 <?php
 
 $_root_dir  = dirname( __DIR__, 2 );
+$_tests_dir = ! empty( getenv( 'WP_TESTS_DIR' ) ) ? getenv( 'WP_TESTS_DIR' ) : $_root_dir . '/tmp/wordpress-tests-lib';
 $_tests_dir = $_root_dir . '/tmp/wordpress-tests-lib';
 require_once $_tests_dir . '/includes/functions.php';
 
